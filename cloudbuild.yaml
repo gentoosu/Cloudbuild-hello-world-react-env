@@ -29,7 +29,7 @@ steps:
 # This step copies the applied manifest to the production branch
 # The COMMIT_SHA variable is automatically
 # replaced by Cloud Build.
-- name: 'gcr.io/cloud-builders/git'
+- name: 'gcr.io/cloud-builders/gcloud'
   id: Copy to production branch
   entrypoint: /bin/sh
   args:
@@ -38,6 +38,7 @@ steps:
     set -x && \
     # Configure Git to create commits with Cloud Build's service account
     git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
+    git remote set-url origin git@github:gentoosu/Cloudbuild-hello-world-react-env.git &&\
     # Switch to the production branch and copy the kubernetes.yaml file from the candidate branch
     git fetch origin production && git checkout production && \
     git checkout $COMMIT_SHA kubernetes.yaml && \
