@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: hello-cloudbuild
-        image: gcr.io/cloudbuild-hello-world-react/hello-cloudbuild:1c1980b
+        image: gcr.io/cloudbuild-hello-world-react/hello-cloudbuild:718104f
         ports:
         - containerPort: 8000
 ---
