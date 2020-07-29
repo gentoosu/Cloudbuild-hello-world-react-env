@@ -92,4 +92,7 @@ steps:
     $(git log --format=%B -n 1 $COMMIT_SHA)" && \
     # Push the changes back to Cloud Source Repository
     git push origin production
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
 # [END cloudbuild-delivery]
