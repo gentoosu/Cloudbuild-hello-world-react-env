@@ -26,6 +26,24 @@ steps:
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-b'
   - 'CLOUDSDK_CONTAINER_CLUSTER=hello-cloudbuild'
 
+#
+# For more robust deploys, can add functional tests
+# here prior to moving the image to the production branch
+#
+
+# [START cloudbuild-trigger-cd]
+# This step clones the hello-cloudbuild-env repository
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Clone env repository
+  entrypoint: /bin/sh
+  args:
+  - '-c'
+  - |
+    git clone https://github.com/gentoosu/Cloudbuild-hello-world-react-env.git && \
+    cd Cloudbuild-hello-world-react-env && \
+    git checkout candidate && \
+    git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
+
 # This step copies the applied manifest to the production branch
 # The COMMIT_SHA variable is automatically
 # replaced by Cloud Build.
@@ -36,6 +54,7 @@ steps:
   - '-c'
   - |
     set -x && \
+    cd Cloudbuild-hello-world-react-env && \
     # Configure Git to create commits with Cloud Build's service account
     git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
     git remote set-url origin git@github:gentoosu/Cloudbuild-hello-world-react-env.git &&\
