@@ -32,7 +32,7 @@ spec:
       - name: hello-cloudbuild
         image: gcr.io/cloudbuild-hello-world-react/hello-cloudbuild:2364134
         ports:
-        - containerPort: 8080
+        - containerPort: 8000
 ---
 kind: Service
 apiVersion: v1
